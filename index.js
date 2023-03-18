@@ -8,6 +8,7 @@ const toolsRoutes = require("./routes/v1/tools.route.js");
 const errorHandler = require("./middleware/errorHandler");
 const { connectToServer } = require("./utils/dbConnect");
 
+// Middle wair
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
@@ -18,6 +19,7 @@ app.set("view engine", "ejs");
 // Apply the rate limiting middleware to all requests
 // app.use(limiter);
 
+//MongoDB connection
 connectToServer((err) => {
   if (!err) {
     app.listen(port, () => {
@@ -28,8 +30,11 @@ connectToServer((err) => {
   }
 });
 
+// http://localhost:5000/api/v1/tools 
+// routeing path
 app.use("/api/v1/tools", toolsRoutes);
 
+// just home page show this index file
 app.get("/", (req, res) => {
   // res.send("Hello World");
   // res.sendFile(__dirname + "/public/test.html");
@@ -41,12 +46,15 @@ app.get("/", (req, res) => {
   });
 });
 
+// If Never route founded
 app.all("*", (req, res) => {
   res.send("NO route found.");
 });
 
+// Error Handler globaly
 app.use(errorHandler);
 
+// MongoDb Error Handeling 
 process.on("unhandledRejection", (error) => {
   console.log(error.name, error.message);
   app.close(() => {

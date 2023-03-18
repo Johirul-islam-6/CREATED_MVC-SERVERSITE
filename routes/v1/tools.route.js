@@ -13,6 +13,7 @@ const router = express.Router();
 //   res.send("tool added");
 // });
 
+// we are use this part. that way we are very simply use and costomize ==> controller  
 router
   .route("/")
   /**
@@ -48,7 +49,7 @@ router
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
   .post(toolsControllers.saveATool);
-  
+
 
 router.route("/test").post(toolsControllers.test).get(toolsControllers.testGet);
 
